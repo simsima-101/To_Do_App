@@ -1,8 +1,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+        <uses-permission android:name="android.permission.VIBRATE"/>
+        <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
         android:label="to_do_app"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
+        android:hardwareAccelerated="true>
+        <service
+            android:name="com.dexterous.flutterlocalnotifications.services.NotificationService"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.dexterous.flutterlocalnotifications.services.NotificationService" />
+         </intent-filter>
+        </service>
+        <receiver android:name="com.dexterous.flutterlocalnotifications.receivers.NotificationReceiver"
+              android:exported="true" android:enabled="true"/>
+        <receiver android:name="com.dexterous.flutterlocalnotifications.receivers.ActionReceiver"
+              android:exported="true" android:enabled="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
