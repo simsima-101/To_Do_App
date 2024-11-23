@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/screens/Home/homesceen.dart';
+import 'package:to_do_app/screens/login/signup.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Method to handle Login
   Future<void> loginUser() async {
+   
     try {
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
@@ -25,9 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
 
+      print('login success');
       // If login is successful, navigate to home screen
-      Navigator.pushReplacementNamed(context, '/home'); // Make sure to create a Home screen route
-
+     Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute<bool>(
+                                              //fullscreenDialog: true,
+                                              settings: const RouteSettings(name: "Homescreen"),
+                                              builder: (BuildContext context) => Homescreen(
+                                                   
+                                                  ))); 
+                                                  errorMessage = "";// Make sure to create a Home screen route
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message ?? "An error occurred. Please try again.";
@@ -122,12 +132,16 @@ class _LoginScreenState extends State<LoginScreen> {
               // Sign Up Option
               TextButton(
                 onPressed: () {
-                  // Navigate to Sign-Up
-                  print('Navigate to Sign-Up');
+                   Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute<bool>(
+                                              //fullscreenDialog: true,
+                                              settings: const RouteSettings(name: "SignUpScreen"),
+                                              builder: (BuildContext context) => SignUpScreen(
+                                                   
+                                                  )));
                 },
-                child: Text("Don't have an account? Sign Up"),
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(fontSize: 14),
+                child: Text(
+                  "Don't have an account? Sign Up",
+                  style: TextStyle(color: Colors.blue),
                 ),
               ),
             ],
